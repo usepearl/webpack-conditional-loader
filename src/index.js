@@ -98,7 +98,9 @@ function commentLine (line) {
 
 module.exports = function (source) {
   try {
-    const sourceByLine = source.split('\n')
+    const hasR = source.indexOf('\r') >= 0    
+    const sourceByLine = source.split(hasR ? '\r\n' : '\n')
+
     const blocks = searchBlocks(sourceByLine)
     const truthyBlocks = getTruthyBlocks(blocks)
     const transformedSource = commentCodeInsideBlocks(sourceByLine, truthyBlocks)
